@@ -46,8 +46,9 @@ int	ft_export(t_dynarray *darr, char *str)
 	char	*envpi;
 
 	envp = darr->list;
+	if (!ft_has_eq(str))
+		return (-1);
 	index = ft_getenv_index(envp, darr->nb_cells, str);
-	printf("index = %d\n", index);
 	if (index >= 0)
 	{
 		envpi = malloc(ft_strlen(str) + 1);
@@ -81,4 +82,19 @@ int	ft_unset(t_dynarray *darr, char *str)
 	return (0);
 }
 
+int	ft_envcmp(char *str, char *str2)
+{
+	int	i;
 
+	i = 0;
+	while (str[i] && str2[i] && str[i] != '=' && str2[i] != '=')
+	{
+		if (str[i] != str2[i])
+			return (-1);
+		i++;
+	}
+	if (str[i] == '=' && str2[i] == '=')
+		return (0);
+	else
+		return (-2);
+}

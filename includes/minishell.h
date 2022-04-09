@@ -9,3 +9,7 @@ int	ft_getenv_index(char **envp, uint64_t len, char *str);
 int	ft_export(t_dynarray *darr, char *str);
 int	ft_envcmp(char *str, char *str2);
 int	ft_unset(t_dynarray *darr, char *str);
+bool	ft_has_eq(char *str);
+int	ft_cd(char *str);
+int	ft_readline(t_dynarray *darr);
+int	ft_check_bin_path(char *bin, char *paths);

@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:19:38 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/04/03 17:20:56 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/04/09 22:09:56 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdint.h>
+# include <fcntl.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -49,5 +51,6 @@ void	ft_memset(void *mem, int c, size_t size);
 int		ft_strlen(char *str);
 int		ft_strcpy(char *str, char *str2);
 int		ft_strcmp(char *str, char *str2);
+int		ft_strncpy(char *str, char *str2, int n);
 
 #endif

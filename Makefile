@@ -5,7 +5,7 @@ NAME = minishell
 CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 SRC	=	minishell.c dynarray2.c dynarray.c ft_str.c ft_mems.c \
-		ft_env.c ft_print.c
+		ft_env.c ft_print.c ft_builtins.c ft_sig.c
 SRC_D = srcs
 SRC_C = $(addprefix ${SRC_D}/, ${SRC})
 
@@ -15,7 +15,7 @@ INC_H = $(addprefix ${INC_D}/, ${INC})
 
 all: $(NAME)
 
-$(NAME): ${INC_H}
+$(NAME): ${INC_H} ${SRC_C}
 	${CC} ${CFLAGS} ${SRC_C} -I${INC_D} -o ${NAME} -lreadline
 
 clean:
