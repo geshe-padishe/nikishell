@@ -28,6 +28,7 @@ int	ft_getenv_index(char **envp, uint64_t len, char *str)
 	i = 0;
 	while (i < len)
 	{
+		//printf("envp[%ld] = %s, str = %s\n", i, envp[i], str);
 		cmp = ft_envcmp(envp[i], str);
 		if (cmp == -1)
 			i++;
@@ -37,49 +38,6 @@ int	ft_getenv_index(char **envp, uint64_t len, char *str)
 			return (i);
 	}
 	return (-1);
-}
-
-int	ft_export(t_dynarray *darr, char *str)
-{
-	int	index;
-	char	**envp;
-	char	*envpi;
-
-	envp = darr->list;
-	if (!ft_has_eq(str))
-		return (-1);
-	index = ft_getenv_index(envp, darr->nb_cells, str);
-	if (index >= 0)
-	{
-		envpi = malloc(ft_strlen(str) + 1);
-		ft_strcpy(str, envpi);
-		free(envp[index]);
-		envp[index] = envpi;
-	}
-	else if (index == -1)
-	{
-		envpi = malloc(ft_strlen(str) + 1);
-		ft_strcpy(str, envpi);
-		push_dynarray(darr, &envpi, 1, 0);
-	}
-	return (0);
-}
-
-int	ft_unset(t_dynarray *darr, char *str)
-{
-	int	index;
-	char	**envp;
-
-	envp = darr->list;
-	index = ft_getenv_index(envp, darr->nb_cells, str);
-	if (index != -1)
-	{
-		free(envp[index]);
-		dynarray_extract(darr, index, 1);
-	}
-	else
-		return (-1);
-	return (0);
 }
 
 int	ft_envcmp(char *str, char *str2)
@@ -97,4 +55,22 @@ int	ft_envcmp(char *str, char *str2)
 		return (0);
 	else
 		return (-2);
+}
+
+char	*ft_getenvval(char *str, char **envp, uint64_t len)
+{
+	int	i;
+	int	index;
+
+	i = 0;
+	if (ft_has_eq(str) == 0)
+		return (printf("no equal\n"), NULL);
+	index = ft_getenv_index(envp, len, str);
+	printf("index = %d\n", index);
+	if (index == -1)
+		return (NULL);
+	printf("envp[%d] = %s\n", index, envp[index]);
+	while (envp[index][i] && envp[index][i] != '=')
+		i++;
+	return (&envp[index][i + 1]);
 }

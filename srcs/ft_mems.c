@@ -1,8 +1,8 @@
 #include "dynarray.h"
 
-void	ft_memset(void *mem, int c, size_t size)
+void	ft_memset(void *mem, int c, int size)
 {
-	size_t	i;
+	int	i;
 	char	*ptr;
 
 	if (!mem)

@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:19:38 by nikotikch         #+#    #+#             */
-/*   Updated: 2022/04/09 22:09:56 by ngenadie         ###   ########.fr       */
+/*   Updated: 2022/04/11 21:23:35 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		dyn_insr(t_dynarray *darr, void *ncells,
 			uint64_t index, uint64_t nb_ncells);
 void	*dynacc(t_dynarray *darr, uint64_t index);
 void	ft_memcpy(void *dest, void *src, size_t size);
-void	ft_memset(void *mem, int c, size_t size);
+void	ft_memset(void *mem, int c, int size);
 int		ft_strlen(char *str);
 int		ft_strcpy(char *str, char *str2);
 int		ft_strcmp(char *str, char *str2);

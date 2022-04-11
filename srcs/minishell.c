@@ -57,25 +57,23 @@ int	ft_readline(t_dynarray *darr)
 	}
 	return (0);
 }
-int	main(int ac, char **argv, char **envp)
-{
-	t_dynarray	darr;
-	int			pid;
-	int			pipefd[2];
-
-	(void)ac;
-	(void)argv;
-
-	//printf("pwd = %s\n", getcwd(pwd, 100));
-	init_dyn_env(envp, &darr);
-	envp = darr.list;
-	ft_export(&darr, "NIKI=BOSS");
-	pipe(pipefd);
-	pid = fork();
-	printf("pid = %d\n", pid);
-	if (pid == 0)
-		execve("/bin/ls", argv, envp);
-	//ft_readline(&darr);
-	//free(line);
-	return (0);
-}
+//int	main(int ac, char **argv, char **envp)
+//{
+//	t_dynarray	darr;
+//	int			pid;
+//	int			pipefd[2];
+//
+//	(void)ac;
+//	(void)argv;
+//
+//	//printf("pwd = %s\n", getcwd(pwd, 100));
+//	init_dyn_env(envp, &darr);
+//	ft_export(&darr, "NIKI=BOSS");
+//	pipe(pipefd);
+//	pid = fork();
+//	if (pid == 0)
+//	{
+//		printf("final = %s\n", ft_getenvval("NIKI=", darr.list, darr.nb_cells));
+//	}
+//	return (0);
+//}
