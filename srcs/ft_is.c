@@ -6,7 +6,7 @@
 /*   By: gfritsch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 11:54:14 by gfritsch          #+#    #+#             */
-/*   Updated: 2022/04/11 15:34:39 by gfritsch         ###   ########.fr       */
+/*   Updated: 2022/04/12 12:42:11 by gfritsch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,23 @@ void	is_command(t_token *token, int i)
 		token[i].is_arg = 1;
 }
 
-
-void	is_env_variable(t_token *token, int i)
-{
-	int	i_str;
-
-	i_str = 0;
-	while (token[i].elem[i_str] != 0)
-	{
-		if (i_str > 0 && token[i].elem[i_str - 1] != '\\' && 
-			token[i].elem[i_str] == '$' && token[i].elem[i_str + 1])
-			token[i].is_env_variable = 1;
-		i_str++;
-	}
-}
-
+/*
+ *			INVALIDE AU CINQUIEME POINT DE LA PARTIE OBLIGATOIRE DU SUJET
+ void	is_env_variable(t_token *token, int i)
+ {
+ 	int	i_str;
+ 
+ 	i_str = 0;
+ 	while (token[i].elem[i_str] != 0)
+ 	{
+ 		if (i_str > 0 && token[i].elem[i_str - 1] != '\\'
+ 			&& token[i].elem[i_str] == '$' && token[i].elem[i_str + 1])
+ 			token[i].is_env_variable = 1;
+ 		i_str++;
+  	}
+ }
+ *
+ */
 void	is_quoted(t_token *token, int i)
 {
 	if (token[i].elem[0] == '\"')

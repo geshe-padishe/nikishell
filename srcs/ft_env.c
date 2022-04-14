@@ -20,7 +20,7 @@ int	init_dyn_env(char **envp, t_dynarray *darr)
 	return (0);
 }
 
-int	ft_getenv_index(char **envp, uint64_t len, char *str)
+int	ft_getenv_index(char **envp, uint64_t len, char *str, bool un_exp)
 {
 	uint64_t	i;
 	int			cmp;
@@ -33,7 +33,12 @@ int	ft_getenv_index(char **envp, uint64_t len, char *str)
 		if (cmp == -1)
 			i++;
 		else if (cmp == -2)
-			return (-2);
+		{
+			if (un_exp == 0)
+				return (i);
+			else
+				return (-2);
+		}
 		else
 			return (i);
 	}
@@ -63,9 +68,7 @@ char	*ft_getenvval(char *str, char **envp, uint64_t len)
 	int	index;
 
 	i = 0;
-	if (ft_has_eq(str) == 0)
-		return (printf("no equal\n"), NULL);
-	index = ft_getenv_index(envp, len, str);
+	index = ft_getenv_index(envp, len, str, 0);
 	printf("index = %d\n", index);
 	if (index == -1)
 		return (NULL);

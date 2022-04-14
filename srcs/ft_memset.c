@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unload.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfritsch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gfritsch <gfritsch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 18:26:23 by gfritsch          #+#    #+#             */
-/*   Updated: 2022/04/14 03:49:19 by ngenadie         ###   ########.fr       */
+/*   Created: 2020/05/01 18:23:43 by gfritsch          #+#    #+#             */
+/*   Updated: 2022/04/05 13:56:34 by gfritsch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_lolunoad(t_split *split, t_token *token)
+void	ft_memset(void *s, int c, int n)
 {
-	int	i;
+	int		i;
+	char	*str;
 
 	i = 0;
-	while (split->split[i] != NULL)
-		free(split->split[i++]);
-	free(split->split);
-	free(split);
-	free(token);
+	str = (char *)s;
+	while (i < n)
+	{
+		str[i] = c;
+		i++;
+	}
 }
