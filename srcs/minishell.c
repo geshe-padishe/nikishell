@@ -57,6 +57,7 @@ int	ft_readline(t_dynarray *darr)
 	}
 	return (0);
 }
+
 //int	main(int ac, char **argv, char **envp)
 //{
 //	t_dynarray	darr;
@@ -73,7 +74,7 @@ int	ft_readline(t_dynarray *darr)
 //	pid = fork();
 //	if (pid == 0)
 //	{
-//		printf("final = %s\n", ft_getenvval("NIKI=", darr.list, darr.nb_cells));
+//		ft_find_bin("ls", ft_getenvval("PATH", darr.list, darr.nb_cells), argv, envp);
 //	}
 //	return (0);
 //}

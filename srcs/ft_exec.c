@@ -4,44 +4,51 @@ char	*ft_check_bin_path(char *bin, char *paths)
 {
 	char	*bin_path;
 
-	bin_path = malloc(ft_strlen(bin) + ft_ch_bef_col(paths) + 2);
+	bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 4);
 	if (bin_path == NULL)
-		return (3);
+		return ((char *)3);
 	bin_path[0] = '/';
-	ft_strncpy(paths, bin_path + 1, ft_ch_bef_col(paths));
-	ft_strcpy(bin, bin_path + 1 + ft_ch_bef_col(paths));
+	ft_strncpy(paths, bin_path + 1, ft_len_bef_col(paths) + 1);
+	bin_path[ft_len_bef_col(paths) + 2] = '/';
+	ft_strcpy(bin, bin_path + 3 + ft_len_bef_col(paths));
 	if (access(bin_path, X_OK))
 		return (bin_path);
 	return (NULL);
 }
 
-int	ft_ch_bef_col(char *paths)
+int	ft_len_bef_col(char *paths)
 {
 	int	i;
 
 	i = 0;
-	while (path[i])
+	while (paths[i])
 	{
-		if (path[i] == ':')
+		if (paths[i] == ':')
 			return (i - 1);
 		i++;
 	}
-	return (i - 1);
+	return (0);
 }
 
-int	ft_find_bin(char *bin, char *paths)
+char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 {
 	char *bin_path;
+
+	(void)argv;
 	while (*paths)
 	{
 		bin_path = ft_check_bin_path(bin, paths);
-		if (bin_path == 3)
-			return (-1);
-		if (bin_path)
+		printf("bin_path = %s\n", bin_path);
+		printf("paths = %s\n", paths);
+		if (bin_path == (char *)3)
+			return (NULL);
+		if (access(bin_path, F_OK & X_OK) == 0)
 		{
-			execve(bin_path, "..", NULL);
+			printf("EXECUTING\n");
+			execve(bin_path, argv, envp);
 			break;
 		}
-		paths += ft_ch_bef_col(paths);
+		paths += ft_len_bef_col(paths) + 1;
 	}
+	return (paths);
 }

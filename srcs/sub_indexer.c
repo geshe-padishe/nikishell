@@ -6,7 +6,7 @@
 /*   By: gfritsch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:37:19 by gfritsch          #+#    #+#             */
-/*   Updated: 2022/04/13 17:20:13 by gfritsch         ###   ########.fr       */
+/*   Updated: 2022/04/14 12:57:13 by gfritsch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,22 @@ void	subindexing_loop_instructions(t_token *token, t_index *subindex,
 
 	j = 0;
 	stock_meta = 0;
-	printf("subindexing(): string is %s\n", token[i_tok].elem);
 	while (token[i_tok].elem[i_str])
 	{
 		ret = which_meta_char(token, i_tok, i_str);
 		if (subindex->begin_word[j] == -1)
 		{
 			subindex->begin_word[j] = i_str;
-			printf("subindexing(): first char[%d] = %c\n", i_str, token[i_tok].elem[i_str]);
 			if (stock_meta == 0 && ret != 0)
 				stock_meta = ret;
-			printf("subindex(): start_word stock_meta = %d\n", stock_meta);
 		}
 		if (subindex->begin_word[j] != -1 && which_meta_char(token, i_tok, i_str + 1) != stock_meta)
 		{
-			printf("subindex(): end_word stock_meta = %d\n", stock_meta);
 			if (ret == 4 || ret == 5)
 				subindex->end_word[j] = i_str + 1;
 			else
 				subindex->end_word[j] = i_str;
 			stock_meta = 0;
-			printf("subindexing(): last char[%d] = %c\n", i_str, token[i_tok].elem[i_str]);
 			j++;
 		}
 		if (ret == 4 || ret == 5)
@@ -49,10 +44,7 @@ void	subindexing_loop_instructions(t_token *token, t_index *subindex,
 		i_str++;
 	}
 	if (subindex->end_word[j] == -1)
-	{
 		subindex->end_word[j] = i_str;
-		printf("subindexing(): last char[%d] = %c\n", i_str, token[i_tok].elem[i_str]);
-	}
 	subindex->nb_word = j + 1;
 }
 

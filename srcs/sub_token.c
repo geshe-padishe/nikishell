@@ -6,7 +6,7 @@
 /*   By: gfritsch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 12:37:50 by gfritsch          #+#    #+#             */
-/*   Updated: 2022/04/13 15:31:09 by gfritsch         ###   ########.fr       */
+/*   Updated: 2022/04/15 13:45:20 by gfritsch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,16 @@ char	*sub_split(t_token *token, t_index *subindex, int i_tok, int i_subtok)
 	char	*dup;
 
 	len = (subindex->end_word[i_subtok] - subindex->begin_word[i_subtok]) + 2;
-	printf("DEBUG - subspit(): len = %d\n", len);
 	dup = (char *)malloc(sizeof(char) * len);
 	if (dup == NULL)
 	{
-		free(subindex->end_word);
-		free(subindex->begin_word);
-		free(subindex);
+		unload_indexer(subindex);
 		perror("sub_split(): allocation error of dup string");
 		return (NULL);
 	}
 	ft_memset((void *)dup, 0, len);
 	i_dup = 0;
-	while (i_dup > (len - 1))
+	while (i_dup < (len - 1))
 	{
 		dup[i_dup] = token[i_tok].elem[i_dup + subindex->begin_word[i_subtok]];
 		i_dup++;
@@ -54,7 +51,7 @@ int	subtokenize_loop(t_token *token, t_index *subindex, int i_tok, int i_subtok)
 		}
 		i_subtok++;
 	}
-	token[i_tok].nb_subtoken = i_subtok + 1;
+	token[i_tok].nb_subtoken = i_subtok;
 	return (0);
 }
 
@@ -68,17 +65,18 @@ int	subtokenize(t_token *token , int i_tok)
 	if (subindex == NULL)
 		return (-1);
 	token[i_tok].subtoken = (t_subtoken *)malloc(sizeof(t_subtoken)
-			* subindex->nb_word + 2);
+			* (subindex->nb_word + 2));
 	if (token[i_tok].subtoken == NULL)
 	{
 		perror("subtokenize(): error allocating subtoken to token");
 		return (-1);
 	}
-	ft_memset((void *)token[i_tok].subtoken, 0, subindex->nb_word + 2);
+	ft_memset((void *)token[i_tok].subtoken, 0, sizeof(t_subtoken) * (subindex->nb_word + 2));
 	if (subtokenize_loop(token, subindex, i_tok, i_subtok) == -1)
 	{
 		perror("subtokenize(): error while loop");
 		return (-1);
 	}
+	unload_indexer(subindex);
 	return (0);
 }

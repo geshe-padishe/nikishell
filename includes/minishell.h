@@ -1,22 +1,22 @@
-# include "dynarray.h"
+#ifndef MINISHELL_H
 
-/*NIKI PROTOS*/
+# include "dynarray.h"
 
 typedef struct s_subtoken
 {
 	int			id_subtoken;
 	int			father_token;
-	int			sub_is_redirection_input;
-	int			sub_is_redirection_output;
-	int			sub_is_here_doc;
-	int			sub_is_append_output;
-	int			sub_is_pipe;
-	int			sub_is_env_variable;
-	int			sub_is_cmd;
-	int			sub_is_arg;
-	int			sub_is_single_quoted;
-	int			sub_is_double_quoted;
-	int			sub_is_wrong;
+	int			is_redirection_input;
+	int			is_redirection_output;
+	int			is_here_doc;
+	int			is_append_output;
+	int			is_pipe;
+	int			is_env_variable;
+	int			is_cmd;
+	int			is_arg;
+	int			is_single_quoted;
+	int			is_double_quoted;
+	int			is_wrong;
 	char		*sub_elem;
 }	t_subtoken;
 
@@ -109,13 +109,15 @@ t_index	*indexing(char *str, t_split *split);
  *	ft_is.c
  */
 
+int		is_meta_char(t_token *token, int i);
 void	which_is(t_token *token, int i);
 
 /*
  *	unload.c
  */
 
-void	ft_lolunoad(t_split *split, t_token *token);
+void	unload(t_split *split, t_token *token);
+void	unload_indexer(t_index *index);
 
 /*
  *	seek_meta_char.c
@@ -136,6 +138,12 @@ t_index	*subindexing(t_token *token, int i_tok);
 
 int		subtokenize(t_token *token, int i_tok);
 
+/*
+ *	ft_sub_is.c
+ */
+
+void	which_sub_is(t_token *token, int i_tok, int i_subtok);
+
 char	*ft_get_dir(char *path);
 char	*ft_make_prompt(char *dir);
 int	init_dyn_env(char **envp, t_dynarray *darr);
@@ -147,5 +155,9 @@ int	ft_unset(t_dynarray *darr, char *str);
 bool	ft_has_eq(char *str);
 int	ft_cd(char *str);
 int	ft_readline(t_dynarray *darr);
-int	ft_check_bin_path(char *bin, char *paths);
+char	*ft_check_bin_path(char *bin, char *paths);
 char	*ft_getenvval(char *str, char **envp, uint64_t len);
+char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp);
+int	ft_len_bef_col(char *paths);
+
+#endif
