@@ -55,3 +55,13 @@ int	ft_strncpy(char *str, char *str2, int n)
 	str2[i] = '\0';
 	return (0);
 }
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}

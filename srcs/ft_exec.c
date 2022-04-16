@@ -4,16 +4,24 @@ char	*ft_check_bin_path(char *bin, char *paths)
 {
 	char	*bin_path;
 
-	bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 4);
+	if (paths[0] != '/')
+		bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 5);
+	else
+		bin_path = malloc(ft_strlen(bin) + ft_len_bef_col(paths) + 4);
 	if (bin_path == NULL)
 		return ((char *)3);
-	bin_path[0] = '/';
-	ft_strncpy(paths, bin_path + 1, ft_len_bef_col(paths) + 1);
-	bin_path[ft_len_bef_col(paths) + 2] = '/';
-	ft_strcpy(bin, bin_path + 3 + ft_len_bef_col(paths));
-	if (access(bin_path, X_OK))
-		return (bin_path);
-	return (NULL);
+	if (paths[0] != '/')
+	{
+		bin_path[0] = '~';
+		bin_path[1] = '/';
+		bin_path += 2;
+	}
+	ft_strncpy(paths, bin_path, ft_len_bef_col(paths) + 1);
+	bin_path[ft_len_bef_col(paths) + 1] = '/';
+	ft_strcpy(bin, bin_path + 2 + ft_len_bef_col(paths));
+	if (paths[0] != '/')
+		bin_path -= 1;
+	return (bin_path);
 }
 
 int	ft_len_bef_col(char *paths)
@@ -27,13 +35,15 @@ int	ft_len_bef_col(char *paths)
 			return (i - 1);
 		i++;
 	}
-	return (0);
+	return (i - 1);
 }
 
 char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 {
 	char *bin_path;
+	int		i;
 
+	i = 0;
 	(void)argv;
 	while (*paths)
 	{
@@ -49,6 +59,9 @@ char	*ft_find_bin(char *bin, char *paths, char **argv, char **envp)
 			break;
 		}
 		paths += ft_len_bef_col(paths) + 1;
+		if (*paths)
+			paths += 1;
+		i++;
 	}
 	return (paths);
 }
